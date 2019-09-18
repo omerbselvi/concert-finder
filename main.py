@@ -50,10 +50,6 @@ def parse_page(soup):
                           event_city[i] + " - " + event_place[i])
     else:
         print("theres a bug, fix it")
-    # print(date)
-    # for i in range(0, len(day_of_week)):
-    #    print(da)
-    # print(data)
     return soup
 
 
