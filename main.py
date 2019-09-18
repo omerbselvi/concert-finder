@@ -18,6 +18,7 @@ def get_website_data(url):
         options.headless = True
         driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
         driver.get(url)
+        print("Searching by category: " + category)
         soup = BeautifulSoup(driver.page_source, 'html.parser')
         parse_page(soup)
         pages = [page.text for page in soup.findAll("li", {"class": "spages"})]
@@ -63,5 +64,7 @@ options, args = parser.parse_args()
 category = options.category
 url = url.format(category)
 soup = get_website_data(url)
+
+print(str(len(events)) + " concerts found for category: " + category)
 for event in events:
     print(event)
