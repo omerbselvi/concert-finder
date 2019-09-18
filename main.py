@@ -1,8 +1,10 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup
+from webdriver_manager.chrome import ChromeDriverManager
+import optparse
 from selenium.webdriver.chrome.options import Options
 
-CHROMEDRIVER_PATH = '/usr/local/bin/chromedriver'
+parser = optparse.OptionParser()
 url = "http://www.biletix.com/search/TURKIYE/tr#!subcat_sb:heavy_metal$MUSIC"
 categories = ["alternatif", "blues", "dans_elektronik", "dunya_muzik", "heavy_metal", "jazz", "klasik", "latin_tango",
               "newage", "party", "pop", "rap_hiphop", "rock", "turksanat_halkmuzik", "other"]
@@ -14,7 +16,7 @@ def get_website_data(url):
     try:
         options = Options()
         options.headless = True
-        driver = webdriver.Chrome(CHROMEDRIVER_PATH, options=options)
+        driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
         driver.get(url)
         soup = BeautifulSoup(driver.page_source, 'html.parser')
         parse_page(soup)
