@@ -11,6 +11,12 @@ categories = ["alternatif", "blues", "dans_elektronik", "dunya_muzik", "heavy_me
               "newage", "party", "pop", "rap_hiphop", "rock", "turksanat_halkmuzik", "other"]
 events = []
 concert_name = []
+CHARMAP = {
+    "to_lower": {
+        u"I": u"ı",
+        u"İ": u"i",
+    }
+}
 
 
 def get_website_data(url):
@@ -54,6 +60,12 @@ def parse_page(soup):
     return soup
 
 
+def lower(string):
+    for key, value in CHARMAP.get("to_lower").items():
+        string = string.replace(key, value)
+    return string.lower()
+
+
 def find_concerts(category, search):
     if len(category):
         global category_url
@@ -71,15 +83,30 @@ parser.add_option('-c', '--category',
 parser.add_option('-s', '--search',
                   action="store", dest="search",
                   help="Search events on biletix", default="")
+parser.add_option('--city',
+                  action="store", dest="city",
+                  help="Search by selected city", default="")
 options, args = parser.parse_args()
 category = options.category
 search = options.search
+city = options.city
 if len(category) and len(search):
     print("invalid args")
     exit()
 
 find_concerts(category, search)
 
-print(str(len(events)) + " concerts found based on your selected category/query: " + category + search)
+count = 0
+hit_count = 0
 for event in events:
-    print(event)
+    if len(city):
+        if lower(city) in lower(event):
+            print(event)
+            hit_count += 1
+            count = hit_count
+        else:
+            continue
+    else:
+        count = len(events)
+        print(event)
+print(str(count) + " concerts found based on your selected category/query: " + category + search + " - " + city)
