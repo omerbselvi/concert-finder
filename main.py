@@ -5,7 +5,8 @@ import optparse
 from selenium.webdriver.chrome.options import Options
 
 parser = optparse.OptionParser()
-url = "http://www.biletix.com/search/TURKIYE/tr#!subcat_sb:{}$MUSIC"
+category_url = "http://www.biletix.com/search/TURKIYE/tr#!subcat_sb:{}$MUSIC"
+search_url = "http://www.biletix.com/search/TURKIYE/tr&searchq={}#{}"
 categories = ["alternatif", "blues", "dans_elektronik", "dunya_muzik", "heavy_metal", "jazz", "klasik", "latin_tango",
               "newage", "party", "pop", "rap_hiphop", "rock", "turksanat_halkmuzik", "other"]
 events = []
@@ -53,14 +54,32 @@ def parse_page(soup):
     return soup
 
 
+def find_concerts(category, search):
+    if len(category):
+        global category_url
+        category_url = category_url.format(category)
+        get_website_data(category_url)
+    elif len(search):
+        global search_url
+        search_url = search_url.format(search, search)
+        get_website_data(search_url)
+
+
 parser.add_option('-c', '--category',
                   action="store", dest="category",
-                  help="Select a category: " + str(categories), default="heavy_metal")
+                  help="Select a category: " + str(categories), default="")
+parser.add_option('-s', '--search',
+                  action="store", dest="search",
+                  help="Search events on biletix", default="")
 options, args = parser.parse_args()
 category = options.category
-url = url.format(category)
-soup = get_website_data(url)
+search = options.search
+if len(category) and len(search):
+    print("invalid args")
+    exit()
 
-print(str(len(events)) + " concerts found for category: " + category)
+find_concerts(category, search)
+
+print(str(len(events)) + " concerts found based on your selected category/query: " + category + search)
 for event in events:
     print(event)
