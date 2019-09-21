@@ -56,6 +56,22 @@ Searching by category/search: metal
 14 concerts found based on your selected category/query: metal - istanbul
 ```
 ```
+(venv) omer.selvi:concert-finder/ (master✗) $ python find-concert.py -s "can gox" --city istanbul                                                       [13:04:28]
+
+Checking for mac64 chromedriver:77.0.3865.40 in cache
+Driver found in /Users/omer.selvi/.wdm/chromedriver/77.0.3865.40/mac64/chromedriver
+Searching by category/search: can gox
+19/Eki/Cmt - Can Gox - İstanbul - Dorock XL Kadıköy - http://www.biletix.com/etkinlik/YWL4J/TURKIYE/tr
+21/Eyl/Cmt - Dorock XL Kadıköy Konserleri - İstanbul - Çeşitli Mekanlar - http://www.biletix.com/etkinlik-grup/107308187/TURKIYE/tr
+21/Eyl/Cmt - Emaar Hayal Kahvesi Konserleri - İstanbul - Hayal Kahvesi Emaar - http://www.biletix.com/etkinlik-grup/173148434/TURKIYE/tr
+10/Eki/Per - Sanat Performance Açıkhava Konserleri  - İstanbul - Çeşitli Mekanlar - http://www.biletix.com/etkinlik-grup/127659605/TURKIYE/tr
+21/Eyl/Cmt - Moda Kayıkhane Konserleri - İstanbul - Moda Kayıkhane - http://www.biletix.com/etkinlik-grup/129157757/TURKIYE/tr
+27/Eyl/Cum - Müzik Boğazdan Gelir - İstanbul - Çeşitli Mekanlar - http://www.biletix.com/etkinlik-grup/106278191/TURKIYE/tr
+21/Eyl/Cmt - Beyrut Performans Konserleri - İstanbul - Beyrut Performans - http://www.biletix.com/etkinlik-grup/107414925/TURKIYE/tr
+21/Eyl/Cmt - IF Performance Hall Ataşehir - İstanbul - Çeşitli Mekanlar - http://www.biletix.com/etkinlik-grup/120236962/TURKIYE/tr
+8 concerts found based on your selected category/query: can gox - istanbul
+```
+```
 (venv) omer.selvi:concert-finder/ (master✗) $ python find-concert.py -c heavy_metal                                                                     [13:03:20]
 
 Checking for mac64 chromedriver:77.0.3865.40 in cache
