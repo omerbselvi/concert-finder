@@ -5,6 +5,7 @@ import optparse
 from selenium.webdriver.chrome.options import Options
 
 parser = optparse.OptionParser()
+biletix_url = "http://www.biletix.com"
 category_url = "http://www.biletix.com/search/TURKIYE/tr#!subcat_sb:{}$MUSIC"
 search_url = "http://www.biletix.com/search/TURKIYE/tr&searchq={}#{}"
 categories = ["alternatif", "blues", "dans_elektronik", "dunya_muzik", "heavy_metal", "jazz", "klasik", "latin_tango",
@@ -25,7 +26,7 @@ def get_website_data(url):
         options.headless = True
         driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
         driver.get(url)
-        print("Searching by category: " + category)
+        print("Searching by category/search: " + category + search)
         soup = BeautifulSoup(driver.page_source, 'html.parser')
         parse_page(soup)
         pages = [page.text for page in soup.findAll("li", {"class": "spages"})]
@@ -49,12 +50,15 @@ def parse_page(soup):
     event_name = [div.text for div in soup.select(".searchResultEventName")][1:]
     event_city = [div.text for div in soup.select(".searchResultCity")][1:]
     event_place = [div.text for div in soup.select(".searchResultPlace")][1:]
+    event_link = [a for a in soup.findAll("a", {"class": "searchResultEventNameMobile"}, href=True)]
+    for idx, link in enumerate(event_link):
+        event_link[idx] = biletix_url + link["href"]
 
     if len(day_of_week) == len(day_of_month) and len(day_of_month) == len(month) and len(month) == len(event_city) \
-            and len(event_city) == len(event_place):
+            and len(event_city) == len(event_place) and len(event_place) == len(event_link):
         for i in range(0, len(day_of_week)):
             events.append(day_of_month[i] + "/" + month[i] + "/" + day_of_week[i] + " - " + event_name[i] + " - " +
-                          event_city[i] + " - " + event_place[i])
+                          event_city[i] + " - " + event_place[i] + " - " + event_link[i])
     else:
         print("theres a bug, fix it")
     return soup
