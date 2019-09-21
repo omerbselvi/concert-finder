@@ -12,12 +12,12 @@ then;
 virtualenv --python=python3 <folder-name>
 source <folder-name>/bin/activate
 pip install -r requirements.txt
-python find-concert.py -h
+python find_concert.py -h
 ```
 ### Usage
 ```sh
-(venv) omer.selvi:concert-finder/ (master) $ python find-concert.py -h                                                                                                                                                      [12:47:34]
-Usage: find-concert.py [options]
+(venv) omer.selvi:concert-finder/ (master) $ python find_concert.py -h                                                                                                                                                      [12:47:34]
+Usage: find_concert.py [options]
 
 Options:
   -h, --help            show this help message and exit
@@ -34,7 +34,7 @@ Options:
 ```
 ### Sample output
 ```
-(venv) omer.selvi:concert-finder/ (master✗) $ python find-concert.py -s metal --city istanbul
+(venv) omer.selvi:concert-finder/ (master✗) $ python find_concert.py -s metal --city istanbul
 
 Checking for mac64 chromedriver:77.0.3865.40 in cache
 Driver found in /Users/omer.selvi/.wdm/chromedriver/77.0.3865.40/mac64/chromedriver
@@ -56,7 +56,7 @@ Searching by category/search: metal
 14 concerts found based on your selected category/query: metal - istanbul
 ```
 ```
-(venv) omer.selvi:concert-finder/ (master✗) $ python find-concert.py -s "can gox" --city istanbul                                                       [13:04:28]
+(venv) omer.selvi:concert-finder/ (master✗) $ python find_concert.py -s "can gox" --city istanbul                                                       [13:04:28]
 
 Checking for mac64 chromedriver:77.0.3865.40 in cache
 Driver found in /Users/omer.selvi/.wdm/chromedriver/77.0.3865.40/mac64/chromedriver
@@ -72,7 +72,7 @@ Searching by category/search: can gox
 8 concerts found based on your selected category/query: can gox - istanbul
 ```
 ```
-(venv) omer.selvi:concert-finder/ (master✗) $ python find-concert.py -c heavy_metal                                                                     [13:03:20]
+(venv) omer.selvi:concert-finder/ (master✗) $ python find_concert.py -c heavy_metal                                                                     [13:03:20]
 
 Checking for mac64 chromedriver:77.0.3865.40 in cache
 Driver found in /Users/omer.selvi/.wdm/chromedriver/77.0.3865.40/mac64/chromedriver
