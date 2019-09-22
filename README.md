@@ -33,7 +33,7 @@ Options:
 
 ```
 ### Sample output
-```
+```sh
 (venv) omer.selvi:concert-finder/ (master✗) $ python find_concert.py -s metal --city istanbul
 
 Checking for mac64 chromedriver:77.0.3865.40 in cache
@@ -55,7 +55,7 @@ Searching by category/search: metal
 10/Mar/Sal - Dark Night: She Past Away, Second Still, Box and the Twins - İstanbul - %100 Studio - http://www.biletix.com/etkinlik/Z5G04/TURKIYE/tr
 14 concerts found based on your selected category/query: metal - istanbul
 ```
-```
+```sh
 (venv) omer.selvi:concert-finder/ (master✗) $ python find_concert.py -s "can gox" --city istanbul                                                       [13:04:28]
 
 Checking for mac64 chromedriver:77.0.3865.40 in cache
@@ -71,7 +71,7 @@ Searching by category/search: can gox
 21/Eyl/Cmt - IF Performance Hall Ataşehir - İstanbul - Çeşitli Mekanlar - http://www.biletix.com/etkinlik-grup/120236962/TURKIYE/tr
 8 concerts found based on your selected category/query: can gox - istanbul
 ```
-```
+```sh
 (venv) omer.selvi:concert-finder/ (master✗) $ python find_concert.py -c heavy_metal                                                                     [13:03:20]
 
 Checking for mac64 chromedriver:77.0.3865.40 in cache
