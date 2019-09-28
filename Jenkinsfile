@@ -19,6 +19,7 @@ pipeline {
             }
             steps {
                 withEnv(["HOME=${env.WORKSPACE}"]) {
+                    sh 'ls'
                     sh 'pip install --user -r requirements.txt'
                     sh 'python find_concert.py -c heavy_metal --city istanbul'
                 }
