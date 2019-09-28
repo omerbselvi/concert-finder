@@ -23,7 +23,6 @@ CHARMAP = {
 
 
 def get_website_data(url):
-    try:
         options = Options()
         options.headless = True
         driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
@@ -41,8 +40,6 @@ def get_website_data(url):
                 parse_page(soup)
         driver.quit()
         return soup
-    except:
-        print("failed to connect")
 
 
 def parse_page(soup):
