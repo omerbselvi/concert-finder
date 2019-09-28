@@ -15,6 +15,10 @@ pipeline {
             agent {
                 docker {
                     image 'python:3-alpine'
+                }
+            }
+            agent {
+                docker {
                     image 'selenium/standalone-chrome'
                 }
             }
