@@ -1,3 +1,5 @@
+#! /usr/bin/env python
+# -*- coding: UTF-8 -*-
 from selenium import webdriver
 from bs4 import BeautifulSoup
 from webdriver_manager.chrome import ChromeDriverManager
@@ -23,7 +25,9 @@ CHARMAP = {
 def get_website_data(url):
     try:
         options = Options()
-        options.headless = True
+        options.add_argument('--headless')
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-dev-shm-usage')
         driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
         driver.get(url)
         print("Searching by category/search: " + category + search)
