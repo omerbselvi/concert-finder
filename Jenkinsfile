@@ -15,6 +15,7 @@ pipeline {
             agent {
                 docker {
                     image 'python:3-alpine'
+                    image 'selenium/standalone-chrome'
                 }
             }
             steps {
