@@ -10,6 +10,7 @@ pipeline {
             steps {
                 checkout scm
             }
+        }
         stage('Build') {
             agent {
                 docker {
