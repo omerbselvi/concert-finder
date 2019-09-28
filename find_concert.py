@@ -24,7 +24,9 @@ CHARMAP = {
 
 def get_website_data(url):
         options = Options()
-        options.headless = True
+        options.add_argument('--headless')
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-dev-shm-usage')
         driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
         driver.get(url)
         print("Searching by category/search: " + category + search)
