@@ -13,8 +13,8 @@ pipeline {
         }
         stage('Build') {
             agent {
-                docker {
-                    image 'python:3-alpine'
+                node {
+                    label 'master'
                 }
             }
             steps {
