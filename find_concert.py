@@ -5,6 +5,11 @@ from bs4 import BeautifulSoup
 from webdriver_manager.chrome import ChromeDriverManager
 import optparse
 from selenium.webdriver.chrome.options import Options
+import email, smtplib, ssl
+from email import encoders
+from email.mime.base import MIMEBase
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 parser = optparse.OptionParser()
 biletix_url = "http://www.biletix.com"
@@ -23,25 +28,47 @@ CHARMAP = {
 
 
 def get_website_data(url):
-        options = Options()
-        options.add_argument('--headless')
-        options.add_argument('--no-sandbox')
-        options.add_argument('--disable-dev-shm-usage')
-        driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
-        driver.get(url)
-        print("Searching by category/search: " + category + search)
-        soup = BeautifulSoup(driver.page_source, 'html.parser')
-        parse_page(soup)
-        pages = [page.text for page in soup.findAll("li", {"class": "spages"})]
-        if len(pages) >= 2:
-            pages = pages[:len(pages) // 2]
-            for page in pages:
-                js = "javascript:gotoPage(" + page + ")"
-                driver.execute_script(js)
-                soup = BeautifulSoup(driver.page_source, 'html.parser')
-                parse_page(soup)
-        driver.quit()
-        return soup
+    options = Options()
+    options.add_argument('--headless')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+    driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+    driver.get(url)
+    print("Searching by category/search: " + category + search)
+    soup = BeautifulSoup(driver.page_source, 'html.parser')
+    parse_page(soup)
+    pages = [page.text for page in soup.findAll("li", {"class": "spages"})]
+    if len(pages) >= 2:
+        pages = pages[:len(pages) // 2]
+        for page in pages:
+            js = "javascript:gotoPage(" + page + ")"
+            driver.execute_script(js)
+            soup = BeautifulSoup(driver.page_source, 'html.parser')
+            parse_page(soup)
+    driver.quit()
+    return soup
+
+
+def send_email(local_events, password):
+    subject = "Biletix Metal Concerts In Istanbul (" + str(len(local_events)) + ")"
+    sender_email = "omerbugraselvi@gmail.com"
+    receiver_email = "omerbugraselvi@gmail.com"
+    mail_password = password
+
+    message = MIMEMultipart()
+    message["From"] = sender_email
+    message["To"] = receiver_email
+    message["Subject"] = subject
+
+    test = u"\n"
+    message.attach(MIMEText(test.join(local_events), "plain"))
+
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+        server.login(sender_email, mail_password)
+        server.sendmail(
+            sender_email, receiver_email, message.as_string()
+        )
 
 
 def parse_page(soup):
@@ -91,9 +118,13 @@ parser.add_option('-s', '--search',
 parser.add_option('--city',
                   action="store", dest="city",
                   help="Search by selected city", default="")
+parser.add_option('-p',
+                  action="store", dest="password",
+                  help="Password for mail", default="")
 options, args = parser.parse_args()
 category = options.category
 search = options.search
+password = options.password
 city = options.city
 if len(category) and len(search):
     print("invalid args")
@@ -103,15 +134,25 @@ find_concerts(category, search)
 
 count = 0
 hit_count = 0
+
+local_events = []
+
 for event in events:
     if len(city):
         if lower(city) in lower(event):
             print(event)
             hit_count += 1
             count = hit_count
+            local_events.append(event)
         else:
             continue
     else:
         count = len(events)
         print(event)
+
+if len(city):
+    send_email(local_events, password)
+else:
+    send_email(events, password)
+
 print(str(count) + " concerts found based on your selected category/query: " + category + search + " - " + city)
