@@ -99,7 +99,7 @@ def lower(string):
 
 
 def str2bool(v):
-    return v.lower() is "true"
+    return v.lower() == "true"
 
 
 def parse_args():
