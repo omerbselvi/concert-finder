@@ -51,8 +51,8 @@ def get_website_data(url):
 
 def send_email(local_events, password):
     subject = "Biletix Metal Concerts In Istanbul (" + str(len(local_events)) + ")"
-    sender_email = "omerbugraselvi@gmail.com"
-    receiver_email = "omerbugraselvi@gmail.com"
+    sender_email = "*MAIL HERE*"
+    receiver_email = "*MAIL HERE*"
     mail_password = password
 
     message = MIMEMultipart()
@@ -98,6 +98,28 @@ def lower(string):
     return string.lower()
 
 
+def str2bool(v):
+    return v.lower() in "true"
+
+
+def parse_args():
+    parser.add_option('-c', '--category',
+                      action="store", dest="category",
+                      help="Select a category: " + str(categories), default="")
+    parser.add_option('-s', '--search',
+                      action="store", dest="search",
+                      help="Search events on biletix", default="")
+    parser.add_option('--city',
+                      action="store", dest="city",
+                      help="Search by selected city", default="")
+    parser.add_option('-m',
+                      action="store", dest="mail",
+                      help="Set True if you want to send E-Mail", default="False")
+    parser.add_option('-p',
+                      action="store", dest="password",
+                      help="Password for mail", default="")
+
+
 def find_concerts(category, search):
     if len(category):
         global category_url
@@ -109,23 +131,13 @@ def find_concerts(category, search):
         get_website_data(search_url)
 
 
-parser.add_option('-c', '--category',
-                  action="store", dest="category",
-                  help="Select a category: " + str(categories), default="")
-parser.add_option('-s', '--search',
-                  action="store", dest="search",
-                  help="Search events on biletix", default="")
-parser.add_option('--city',
-                  action="store", dest="city",
-                  help="Search by selected city", default="")
-parser.add_option('-p',
-                  action="store", dest="password",
-                  help="Password for mail", default="")
+parse_args()
 options, args = parser.parse_args()
 category = options.category
 search = options.search
 password = options.password
 city = options.city
+mail = options.mail
 if len(category) and len(search):
     print("invalid args")
     exit()
@@ -150,9 +162,10 @@ for event in events:
         count = len(events)
         print(event)
 
-if len(city):
-    send_email(local_events, password)
-else:
-    send_email(events, password)
+if str2bool(mail):
+    if len(city):
+        send_email(local_events, password)
+    else:
+        send_email(events, password)
 
 print(str(count) + " concerts found based on your selected category/query: " + category + search + " - " + city)
