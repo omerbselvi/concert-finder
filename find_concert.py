@@ -51,8 +51,8 @@ def get_website_data(url):
 
 def send_email(local_events, password):
     subject = "Biletix Metal Concerts In Istanbul (" + str(len(local_events)) + ")"
-    sender_email = "*MAIL HERE*"
-    receiver_email = "*MAIL HERE*"
+    sender_email = "omerbugra.selvi@gmail.com"
+    receiver_email = "omerbugra.selvi@gmail.com"
     mail_password = password
 
     message = MIMEMultipart()
