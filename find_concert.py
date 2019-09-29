@@ -60,7 +60,7 @@ def send_email(local_events, password):
     message["To"] = receiver_email
     message["Subject"] = subject
 
-    test = u"\n"
+    test = u" \n"
     message.attach(MIMEText(test.join(local_events), "plain"))
 
     context = ssl.create_default_context()
@@ -99,7 +99,7 @@ def lower(string):
 
 
 def str2bool(v):
-    return v.lower() in "true"
+    return v.lower() is "true"
 
 
 def parse_args():
